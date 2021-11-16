@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: trip-viewer-deployment
+  labels:
+    deploy: trip-viewer
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: trip-viewer
+  template:
+    metadata:
+      labels:
+        app: trip-viewer
+    spec:
+      hostname: tripviewer
+      containers:
+      - name: trip-viewer
+        image: registryylw2763.azurecr.io/tripinsights/tripviewer:latest
+        ports:
+        - containerPort: 80
+          protocol: TCP
+          name: http

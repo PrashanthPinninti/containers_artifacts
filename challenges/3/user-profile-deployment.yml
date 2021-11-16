@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-profile-deployment
+  labels:
+    deploy: user-profile
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: user-profile
+  template:
+    metadata:
+      labels:
+        app: user-profile
+    spec:
+      containers:
+      - name: user-profile
+        image: registryylw2763.azurecr.io/tripinsights/userprofile:latest
+        ports:
+        - containerPort: 80
