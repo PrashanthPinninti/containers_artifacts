@@ -22,3 +22,25 @@ spec:
         - containerPort: 80
           protocol: TCP
           name: http
+        env:
+          - name: "TRIPS_API_ENDPOINT"
+            value: "trips-service"
+          - name: "USERPROFILE_API_ENDPOINT"
+            value: "user-profile-service"
+
+
+---
+apiVersion: v1
+kind: Service
+metadata: 
+  name: trip-viewer-service
+  labels:
+    run: trip-viewer
+spec:
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80
+  selector:
+    app: trip-viewer
+
