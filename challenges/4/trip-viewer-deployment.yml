@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: trip-viewer-deployment
+  namespace: web
   labels:
     deploy: trip-viewer
 spec:
@@ -24,9 +25,9 @@ spec:
           name: http
         env:
           - name: "TRIPS_API_ENDPOINT"
-            value: "http://trips-service:80"
+            value: "http://trips-service.api:80"
           - name: "USERPROFILE_API_ENDPOINT"
-            value: "http://user-profile-service:80"
+            value: "http://user-profile-service.api:80"
 
 
 ---
@@ -34,8 +35,8 @@ apiVersion: v1
 kind: Service
 metadata: 
   name: trip-viewer-service
-  labels:
-    run: trip-viewer
+  namespace: web
+
 spec:
   ports:
     - port: 80
