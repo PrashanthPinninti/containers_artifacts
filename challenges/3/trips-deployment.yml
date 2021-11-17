@@ -19,6 +19,9 @@ spec:
         image: registryylw2763.azurecr.io/tripinsights/trips:latest
         ports:
         - containerPort: 80
+        envFrom:
+        - secretRef:
+            name: prod-db-secret
 
 ---
 apiVersion: v1

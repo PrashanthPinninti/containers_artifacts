@@ -27,6 +27,9 @@ spec:
             value: "trips-service"
           - name: "USERPROFILE_API_ENDPOINT"
             value: "user-profile-service"
+        envFrom:
+        - secretRef:
+            name: prod-db-secret
 
 
 ---
