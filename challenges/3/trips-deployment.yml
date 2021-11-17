@@ -22,6 +22,9 @@ spec:
         envFrom:
         - secretRef:
             name: prod-db-secret
+        env:
+          - name: "OPENAPI_DOCS_URI"
+            value: "http://localhost"
 
 ---
 apiVersion: v1
