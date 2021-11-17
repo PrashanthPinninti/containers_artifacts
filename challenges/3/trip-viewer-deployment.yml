@@ -24,9 +24,9 @@ spec:
           name: http
         env:
           - name: "TRIPS_API_ENDPOINT"
-            value: "trips-service"
+            value: "http://trips-service:80"
           - name: "USERPROFILE_API_ENDPOINT"
-            value: "user-profile-service"
+            value: "http://user-profile-service:80"
         envFrom:
         - secretRef:
             name: prod-db-secret
