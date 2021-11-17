@@ -19,3 +19,6 @@ spec:
         image: registryylw2763.azurecr.io/tripinsights/user-java:latest
         ports:
         - containerPort: 80
+        envFrom:
+        - secretRef:
+            name: prod-db-secret
