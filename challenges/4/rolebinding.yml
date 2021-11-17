@@ -1,0 +1,131 @@
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: web-editor
+  namespace: web
+rules:
+- apiGroups: 
+        - ""
+        - apps
+        - autoscaling
+        - batch
+        - extensions
+        - policy
+        - rbac.authorization.k8s.io
+  resources: ["*"]
+  verbs: ["*"]
+
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: web-reader
+  namespace: web
+rules:
+- apiGroups:
+        - ""
+        - apps
+        - autoscaling
+        - batch
+        - extensions
+        - policy
+        - rbac.authorization.k8s.io
+  resources: ["*"]
+  verbs: ["get", "list", "watch"]
+
+---
+
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: api-editor
+  namespace: api
+rules:
+- apiGroups: 
+        - ""
+        - apps
+        - autoscaling
+        - batch
+        - extensions
+        - policy
+        - rbac.authorization.k8s.io
+  resources: ["*"]
+  verbs: ["*"]
+
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: api-reader
+  namespace: api
+rules:
+- apiGroups:
+        - ""
+        - apps
+        - autoscaling
+        - batch
+        - extensions
+        - policy
+        - rbac.authorization.k8s.io
+  resources: ["*"]
+  verbs: ["get", "list", "watch"]
+
+---
+
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: web-group-web
+  namespace: web
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: web-editor
+subjects:
+- kind: Group
+  namespace: web
+  name: cf08c6d9-adcc-4c82-95ca-74a4f8d5b0d3
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: web-group-api
+  namespace: api
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: api-reader
+subjects:
+- kind: Group
+  namespace: web
+  name: cf08c6d9-adcc-4c82-95ca-74a4f8d5b0d3
+
+---
+  
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: api-group-web
+  namespace: web
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: web-reader
+subjects:
+- kind: Group
+  namespace: web
+  name: 82f1ed77-346e-481f-8410-a6773d217cfb
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: api-group-api
+  namespace: api
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: api-editor
+subjects:
+- kind: Group
+  namespace: web
+  name: 82f1ed77-346e-481f-8410-a6773d217cfb
