@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: trip-viewer-deployment
+  labels:
+    deploy: trip-viewer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: trip-viewer
+  template:
+    metadata:
+      labels:
+        app: trip-viewer
+    spec:
+      hostname: tripviewer
+      containers:
+      - name: trip-viewer
+        image: registryylw2763.azurecr.io/tripinsights/tripviewer:latest
+        ports:
+        - containerPort: 80
+          protocol: TCP
+          name: http
+        env:
+          - name: "TRIPS_API_ENDPOINT"
+            value: "http://trips-service:80"
+          - name: "USERPROFILE_API_ENDPOINT"
+            value: "http://user-profile-service:80"
+
+
+---
+apiVersion: v1
+kind: Service
+metadata: 
+  name: trip-viewer-service
+  labels:
+    run: trip-viewer
+spec:
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80
+  selector:
+    app: trip-viewer
+
