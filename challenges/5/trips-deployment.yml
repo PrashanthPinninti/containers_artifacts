@@ -16,16 +16,26 @@ spec:
         app: trips
     spec:
       containers:
-      - name: trips
-        image: registryylw2763.azurecr.io/tripinsights/trips:latest
-        ports:
-        - containerPort: 80
-        envFrom:
-        - secretRef:
-            name: prod-db-secret
-        env:
-          - name: "OPENAPI_DOCS_URI"
-            value: "http://localhost"
+          - name: trips
+            image: registryylw2763.azurecr.io/tripinsights/trips:latest
+            ports:
+            - containerPort: 80
+            env:
+              - name: "OPENAPI_DOCS_URI"
+                value: "http://localhost"
+            volumeMounts:
+                  - name: secrets-store-inline
+                    mountPath: "/secrets"
+                    readOnly: true
+      volumes:
+        - name: secrets-store-inline
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: "azure-kvname"
+            nodePublishSecretRef: 
+              name: secrets-store-creds
 
 ---
 apiVersion: v1
