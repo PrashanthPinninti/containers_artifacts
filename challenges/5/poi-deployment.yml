@@ -20,9 +20,6 @@ spec:
             image: registryylw2763.azurecr.io/tripinsights/poi:latest
             ports:
             - containerPort: 80
-            #command:
-            #  - "/bin/sleep"
-            #  - "10000"
             volumeMounts:
             - name: secrets-store-inline
               mountPath: "/secrets"
