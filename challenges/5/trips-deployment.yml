@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: trips-deployment
+  namespace: api
+  labels:
+    deploy: trips
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: trips
+  template:
+    metadata:
+      labels:
+        app: trips
+    spec:
+      containers:
+      - name: trips
+        image: registryylw2763.azurecr.io/tripinsights/trips:latest
+        ports:
+        - containerPort: 80
+        envFrom:
+        - secretRef:
+            name: prod-db-secret
+        env:
+          - name: "OPENAPI_DOCS_URI"
+            value: "http://localhost"
+
+---
+apiVersion: v1
+kind: Service
+metadata: 
+  name: trips-service
+  namespace: api
+
+spec:
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80
+  selector:
+    app: trips
+
